@@ -12,6 +12,7 @@ myCoin=tk.PhotoImage(file='coin.png')
 myEnemy=tk.PhotoImage(file='monster.png')
 myGoal=tk.PhotoImage(file='flag.png')
 myWall=tk.PhotoImage(file='wall.png')
+myBackground=tk.PhotoImage(file='backg.png')
 
 #Note
 empty=0
@@ -25,16 +26,16 @@ goal=5
 # Main VARIABLES
 grid =[
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1],
-    [1, 2, 0, 0, 0, 0, 0, 0, 4, 0, 3,1],
-    [1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,1],
-    [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0,1],
-    [1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0,1],
-    [1, 4, 0, 3, 0, 0, 0, 0, 3, 0, 0,1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,1],
-    [1, 0, 0, 0, 4, 0, 0, 0, 3, 0, 0,1],
-    [1, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0,1],
-    [1, 0, 3, 0, 3, 0, 0, 4, 0, 4, 0,1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,1], 
+    [1, 2, 3, 1, 1, 3, 1, 3, 4, 0, 3,1],
+    [1, 4, 0, 0, 3, 4, 3, 4, 3, 0, 1,1],
+    [1, 3, 3, 0, 1, 1, 1, 1, 1, 0, 0,1],
+    [1, 1, 1, 0, 4, 3, 1, 3, 3, 4, 0,1],
+    [1, 4, 1, 0, 1, 1, 1, 1, 1, 1, 0,1],
+    [1, 3, 1, 0, 3, 4, 3, 4, 3, 1, 0,1],
+    [1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0,1],
+    [1, 4, 3, 0, 1, 3, 4, 3, 4, 3, 0,1],
+    [1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 3,1],
+    [1, 3, 3, 0, 0, 0, 3, 0, 0, 0, 5,1], 
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1], 
 ]
 
@@ -42,6 +43,8 @@ grid =[
 def arrayToDrawing():
     global myImage,myCoin
     canvas.delete("all")
+    canvas.create_image(160,310, image=myBackground)
+
     for Y in range (len(grid)):
         for X in range  (len(grid[0])):
             x1 = (X * 50)
@@ -49,15 +52,11 @@ def arrayToDrawing():
             x2 = 50 + x1
             y2 = 50 + y1
             value = grid[Y][X]
-            if value == empty:
-                color = "white"
             if value != player:
                 if value !=coin:
                     if value!=monster:
                         if value !=goal:
-                            if value!=wall:
-                                canvas.create_rectangle(x1,y1,x2,y2,fill=color)
-                            else:
+                            if value==wall:
                                 canvas.create_image(x1+26,y1+27,image=myWall)
                         else:
                             canvas.create_image(x1+26,y1+27,image=myGoal)
@@ -129,8 +128,6 @@ root.bind("<Down>", MoveDown)  #Down CLICK
 canvas.pack(expand=True, fill="both")
 arrayToDrawing()
 root.mainloop()
-
-
 
 
 
