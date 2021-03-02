@@ -1,10 +1,10 @@
 #  IMPORTS
 import tkinter as tk
 #add sound
-# from pygame import mixer
-# mixer.init(44100, -16,2,2048)
-# coinSound = mixer.Sound('coin5.wav')
-import winsound
+from pygame import mixer
+mixer.init(44100, -16,2,2048)
+coinSound = mixer.Sound('coin5.wav')
+
 #  MAIN Code
 root = tk.Tk()
 root.geometry("600x600")
@@ -49,7 +49,7 @@ grid =[
 
 ScoreOfCoins=0
 
-StepOfMoving=0
+StepOfMoving=20
 
 
 #  FUNCTION
@@ -96,24 +96,22 @@ def MoveRight(event):
     position = PositionOfPlayer(grid)
     playerrow = position[0]
     playercolumn = position[1]
-    oldValue = 0
     if grid[playerrow][playercolumn +1]!=1:
         grid[playerrow][playercolumn ]=0
-        oldValue = grid[playerrow][playercolumn+1]
         grid[playerrow][playercolumn +1]=2
     
-    StepOfMoving=StepOfMoving+1
-    if oldValue==goal and ScoreOfCoins>=50 and StepOfMoving<=20:
-        winsound .PlaySound('win.wav', winsound.SND_FILENAME)
+    StepOfMoving=StepOfMoving-1
+    if grid[playerrow][playercolumn+1]==goal and ScoreOfCoins>=50 and StepOfMoving>=0:
+        coinSound.play()
         canvas.create_image(50,50,image=myWiner)
-    if oldValue==coin:
-        winsound .PlaySound('coin.wav', winsound.SND_FILENAME)
+    if grid[playerrow][playercolumn+1]==coin:
+        print("coin")
+        coinSound.play()
         ScoreOfCoins=ScoreOfCoins+10
-    if oldValue==monster:
-        winsound .PlaySound('lost.wav', winsound.SND_FILENAME)
+    if grid[playerrow][playercolumn+1]==monster:
+        coinSound.play()
         canvas.create_image(50,50,image=myLoser)
     arrayToDrawing()
-    
 
 
 def MoveLeft(event):
@@ -126,16 +124,15 @@ def MoveLeft(event):
         grid[playerrow][playercolumn]=0
         oldValue = grid[playerrow][playercolumn-1]
         grid[playerrow][playercolumn-1]=2
-        
-    StepOfMoving=StepOfMoving+1
-    if oldValue==goal and ScoreOfCoins>=50 and StepOfMoving<=20:
-        winsound .PlaySound('win.wav', winsound.SND_FILENAME)
+    StepOfMoving=StepOfMoving-1
+    if oldValue==goal and ScoreOfCoins>=50 and StepOfMoving>=0:
+        coinSound.play()
         canvas.create_image(50,50,image=myWiner)
     if oldValue==coin:
-        winsound .PlaySound('coin.wav', winsound.SND_FILENAME)
+        coinSound.play()
         ScoreOfCoins=ScoreOfCoins+10
     if oldValue==monster:
-        winsound .PlaySound('lost.wav', winsound.SND_FILENAME)
+        coinSound.play()
         canvas.create_image(50,50,image=myLoser)
     arrayToDrawing()
 
@@ -144,20 +141,19 @@ def MoveUp(event):
     position = PositionOfPlayer(grid)
     playerrow = position[0]
     playercolumn = position[1]
-    oldValue = 0
     if grid[playerrow-1][playercolumn ]!=1:
         grid[playerrow][playercolumn ]=0
-        oldValue = grid[playerrow-1][playercolumn]
         grid[playerrow-1][playercolumn ]=2
-    StepOfMoving=StepOfMoving+1
-    if oldValue==goal and ScoreOfCoins>=50 and StepOfMoving<=20:
-        winsound .PlaySound('win.wav', winsound.SND_FILENAME)
+    StepOfMoving=StepOfMoving-1
+    if grid[playerrow-1][playercolumn]==goal and ScoreOfCoins>=50 and StepOfMoving>=0:
+        coinSound.play()
         canvas.create_image(50,50,image=myWiner)
-    if oldValue==coin:
-        winsound .PlaySound('coin.wav', winsound.SND_FILENAME)
+    if grid[playerrow-1][playercolumn]==coin:
+        print("coin")
+        coinSound.play()
         ScoreOfCoins=ScoreOfCoins+10
-    if oldValue==monster:
-        winsound .PlaySound('lost.wav', winsound.SND_FILENAME)
+    if grid[playerrow-1][playercolumn]==monster:
+        coinSound.play()
         canvas.create_image(50,50,image=myLoser)
     arrayToDrawing()
     
@@ -166,19 +162,19 @@ def MoveDown(event):
     position = PositionOfPlayer(grid)
     playerrow = position[0]
     playercolumn  = position[1]
-    oldValue = 0
     if grid[playerrow+1][playercolumn ]!=1:
         grid[playerrow][playercolumn ]=0
-        oldValue = grid[playerrow+1][playercolumn]
         grid[playerrow+1][playercolumn ]=2
-    if oldValue==goal and ScoreOfCoins>=50 and StepOfMoving<=20:
-        winsound .PlaySound('win.wav', winsound.SND_FILENAME)
+    StepOfMoving=StepOfMoving-1
+    if grid[playerrow+1][playercolumn]==goal and ScoreOfCoins>=50 and StepOfMoving>=0:
+        coinSound.play()
         canvas.create_image(50,50,image=myWiner)
-    if oldValue==coin:
-        winsound .PlaySound('coin.wav', winsound.SND_FILENAME)
+    if grid[playerrow][playercolumn-1]==coin:
+        print("coin")
+        coinSound.play()
         ScoreOfCoins=ScoreOfCoins+10
-    if oldValue==monster:
-        winsound .PlaySound('lost.wav', winsound.SND_FILENAME)
+    if grid[playerrow][playercolumn-1]==monster:
+        coinSound.play()
         canvas.create_image(50,50,image=myLoser)
     arrayToDrawing()
 
@@ -194,3 +190,5 @@ root.bind("<Down>", MoveDown)  #Down CLICK
 canvas.pack(expand=True, fill="both")
 arrayToDrawing()
 root.mainloop()
+
+
