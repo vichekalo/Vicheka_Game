@@ -1,5 +1,6 @@
 #  IMPORTS
 import tkinter as tk
+#To display  messagebox
 from tkinter import messagebox
 #add sound
 import winsound
@@ -8,6 +9,7 @@ root = tk.Tk()
 root.geometry("600x655")
 root.resizable(0,0)
 canvas = tk.Canvas(root)
+#Title
 root.title('Vicheka.Lo-GamerCambodia')
 
 #add image
@@ -17,7 +19,7 @@ myEnemy=tk.PhotoImage(file='monster.png')
 myGoal=tk.PhotoImage(file='flag.png')
 myWall=tk.PhotoImage(file='wall.png')
 myBackground=tk.PhotoImage(file='backg.png')
-##Result
+#Image Result 
 myWiner=tk.PhotoImage(file='youwin.png')
 myLoser=tk.PhotoImage(file='gameover.png')
 
@@ -53,8 +55,8 @@ StepOfMoving=20
 def arrayToDrawing():
     global myImage,myCoin,StepOfMoving
     canvas.delete("all")
+    #Add background Image and Images instead grid colors
     canvas.create_image(210,310, image=myBackground)
-
     for Y in range (len(grid)):
         for X in range  (len(grid[0])):
             x1 = (X * 50)
@@ -76,6 +78,7 @@ def arrayToDrawing():
                     canvas.create_image(x1+26,y1+27,image=myCoin)
             else:
                 canvas.create_image(x1+23,y1+27,image=myImage)
+    #To display Score and  Time of moving
     canvas.create_text(40,20,fill="black",font="Times 16 italic bold",text="Score: "+str(ScoreOfCoins))
     canvas.create_text(200,20,fill="black",font="Times 16 italic bold",text="Time Left: "+str(StepOfMoving))
     return None
